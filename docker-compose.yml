@@ -1,0 +1,19 @@
+version: '3'
+services:
+
+  certbot:
+    image: certbot/dns-cloudflare
+    volumes:
+      - ./certs:/etc/letsencrypt
+      - ./cloudflare.ini:/root/cloudflare.ini
+    command: >-
+      certonly --dns-cloudflare
+      --dns-cloudflare-credentials /root/cloudflare.ini
+      --dns-cloudflare-propagation-seconds 15
+      --email YOUR@EMAIL.COM
+      --agree-tos --no-eff-email
+      --force-renewal
+      -d domain1.com
+      -d *.domain1.com
+      -d domain2.com
+      -d *.domain2.com
